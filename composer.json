@@ -1,0 +1,30 @@
+{
+  "name":        "planetadeleste/smsmasivos",
+  "description": "Send SMS throw smsmasivos.com.uy service",
+  "keywords":    [
+    "sms",
+    "smsmasivos",
+    "planetadeleste",
+    "message",
+    "notify"
+  ],
+  "homepage":    "https://github.com/planetadeleste/smsmasivos",
+  "license":     "GNU",
+  "authors":     [
+    {
+      "name":     "Alvaro Canepa",
+      "email":    "info@planetadeleste.com",
+      "homepage": "http://www.planetadeleste.com",
+      "role":     "Developer"
+    }
+  ],
+  "require":     {
+    "php":               ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload":    {
+    "psr-4": {
+      "PlanetaDelEste\\SmsMasivos\\": "src"
+    }
+  },
+}
