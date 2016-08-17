@@ -24,7 +24,8 @@
   },
   "autoload":    {
     "psr-4": {
-      "PlanetaDelEste\\SmsMasivos\\": "src"
+      "PlanetaDelEste\\SmsMasivos\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
