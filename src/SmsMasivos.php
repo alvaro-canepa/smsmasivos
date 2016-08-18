@@ -34,6 +34,11 @@ class SmsMasivos
     protected static $pass = null;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * SMS text message
      * @var null|string
      */
@@ -49,7 +54,13 @@ class SmsMasivos
      * Test message without send
      * @var integer
      */
-    public $test = 0;
+    public $test = null;
+
+    /**
+     * Send internal id
+     * @var null|mixed
+     */
+    public $internalId = null;
 
     public function __construct($user = null, $pass = null)
     {
@@ -60,6 +71,8 @@ class SmsMasivos
         if (strlen($pass)) {
             self::$pass = $pass;
         }
+
+        $this->client = new Client(['base_uri' => self::$base_uri]);
     }
 
     /**
@@ -173,31 +186,96 @@ class SmsMasivos
          */
         $this->message($message)->phone($phone);
 
-        if($callback instanceof Closure){
-            return call_user_func($callback, post());
+        if (!strlen($this->text)) {
+            throw new InvalidArgumentException('No se ha especificado un texto en el mensaje');
+        }
+
+        if ($callback instanceof Closure) {
+            return call_user_func($callback, $this->post());
         }
 
         throw new InvalidArgumentException('Función de llamada inválida');
-
     }
 
     /**
+     * @return string
+     */
+    public function balance()
+    {
+        return $this->get('/obtener_saldo.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+    }
+
+    /**
+     * @return string
+     */
+    public function expiration()
+    {
+        return $this->get('/obtener_vencimiento_paquete.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+    }
+
+    /**
+     * @return string
+     */
+    public function messagesSent()
+    {
+        return $this->get('/obtener_envios.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+    }
+
+    /**
+     * @param bool $iso
+     *
+     * @return string
+     */
+    public function serverDate($iso = true)
+    {
+        $query = ($iso) ? ['iso' => 1] : [];
+        return $this->get('/get_fecha.asp', $query)->getBody()->getContents();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function username()
+    {
+        return self::$user;
+    }
+
+    /**
+     * @param string $uri
+     *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    protected function post()
+    protected function post($uri = '/enviar_sms.asp')
     {
-        $client = new Client(['base_uri' => self::$base_uri]);
-        return $client->request(
+        return $this->client->request(
             'POST',
-            '/enviar_sms.asp',
+            $uri,
             [
-                'api'     => 1,
-                'usuario' => self::$user,
-                'clave'   => self::$pass,
-                'tos'     => $this->phone,
-                'texto'   => $this->text,
-                'test'    => (int)$this->test
+                'query' => [
+                    'api'       => 1,
+                    'usuario'   => self::$user,
+                    'clave'     => self::$pass,
+                    'tos'       => $this->phone,
+                    'texto'     => $this->text,
+                    'test'      => $this->test,
+                    'idinterno' => $this->internalId
+                ]
             ]
         );
+    }
+
+    /**
+     * @param string $uri
+     * @param array  $query
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    protected function get($uri, $query)
+    {
+        if (!is_array($query)) {
+            $query = (strlen($query)) ? [$query] : [];
+        }
+
+        return $this->client->request('GET', $uri, ['query' => $query]);
     }
 }
