@@ -6,7 +6,7 @@
  * (https://creativecommons.org/licenses/by-nd/4.0/). Based on a work at recibosya.uy.
  */
 
-namespace PlanetaDelEste\SmsMasivos;
+namespace AlvaroCanepa\SmsMasivos;
 
 
 use Closure;
