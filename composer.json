@@ -1,6 +1,7 @@
 {
-  "name":        "planetadeleste/smsmasivos",
+  "name":        "alvaro-canepa/smsmasivos",
   "description": "Send SMS throw smsmasivos.com.uy service",
+  "type": "library",
   "keywords":    [
     "sms",
     "smsmasivos",
@@ -8,8 +9,8 @@
     "message",
     "notify"
   ],
-  "homepage":    "https://github.com/planetadeleste/smsmasivos",
-  "license":     "proprietary",
+  "homepage":    "https://github.com/alvaro-canepa/smsmasivos",
+  "license":     "MIT",
   "authors":     [
     {
       "name":     "Alvaro Canepa",
@@ -24,7 +25,8 @@
   },
   "autoload":    {
     "psr-4": {
-      "PlanetaDelEste\\SmsMasivos\\": "src"
+      "AlvaroCanepa\\SmsMasivos\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
