@@ -93,6 +93,14 @@ class SmsMasivos
     }
 
     /**
+     * @return bool
+     */
+    public function isAuth()
+    {
+        return (strlen(self::$user) && strlen(self::$pass));
+    }
+
+    /**
      * @param $text
      *
      * @return $this
