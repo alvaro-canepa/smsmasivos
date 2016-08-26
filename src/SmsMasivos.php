@@ -121,6 +121,14 @@ class SmsMasivos
     }
 
     /**
+     * @return null|string
+     */
+    public function getMessage()
+    {
+        return $this->text;
+    }
+
+    /**
      * @param integer $phone
      *
      * @return $this
@@ -134,6 +142,14 @@ class SmsMasivos
         $this->phone = $phone;
 
         return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -199,7 +215,7 @@ class SmsMasivos
         }
 
         if ($callback instanceof Closure) {
-            return call_user_func($callback, $this->post());
+            return call_user_func($callback, $this->post(), $this);
         }
 
         throw new InvalidArgumentException('Función de llamada inválida');
