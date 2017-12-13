@@ -122,7 +122,6 @@ class SmsMasivos
             },
             $params
         );
-        trace_log($params);
         $this->text = strtr($text, $params);
 
         return $this;
