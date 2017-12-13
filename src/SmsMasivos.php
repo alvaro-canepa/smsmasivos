@@ -11,6 +11,7 @@ namespace AlvaroCanepa\SmsMasivos;
 use Closure;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
+use function array_map_assoc;
 
 class SmsMasivos
 {
