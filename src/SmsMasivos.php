@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright (c) 2016 Alvaro Cánepa <info@planetadeleste.com>.
- * PaySlip by Alvaro Cánepa is licensed under a
- * Creative Commons Attribution-NoDerivatives 4.0 International License
- * (https://creativecommons.org/licenses/by-nd/4.0/). Based on a work at recibosya.uy.
+ *  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ *  Everyone is permitted to copy and distribute verbatim copies
+ *  of this license document, but changing it is not allowed.
  */
 
 namespace AlvaroCanepa\SmsMasivos;
@@ -101,11 +100,12 @@ class SmsMasivos
     }
 
     /**
-     * @param $text
+     * @param string $text
+     * @param array  $params
      *
      * @return $this
      */
-    public function message($text)
+    public function message($text, $params = [])
     {
         if (strlen($text) > 160) {
             throw new InvalidArgumentException('El texto del mensaje supera el máximo de 160 caracteres.');
@@ -115,7 +115,14 @@ class SmsMasivos
             throw new InvalidArgumentException('El texto del mensaje contiene caracteres inválidos');
         }
 
-        $this->text = $text;
+        $params = array_map_assoc(
+            function ($key, $value) {
+                return [':'.$key => $value];
+            },
+            $params
+        );
+        trace_log($params);
+        $this->text = strtr($text, $params);
 
         return $this;
     }
@@ -226,7 +233,8 @@ class SmsMasivos
      */
     public function balance()
     {
-        return $this->get('/obtener_saldo.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+        return $this->get('/obtener_saldo.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody(
+        )->getContents();
     }
 
     /**
@@ -234,7 +242,10 @@ class SmsMasivos
      */
     public function expiration()
     {
-        return $this->get('/obtener_vencimiento_paquete.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+        return $this->get(
+            '/obtener_vencimiento_paquete.asp',
+            ['usuario' => self::$user, 'clave' => self::$pass]
+        )->getBody()->getContents();
     }
 
     /**
@@ -242,7 +253,8 @@ class SmsMasivos
      */
     public function messagesSent()
     {
-        return $this->get('/obtener_envios.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody()->getContents();
+        return $this->get('/obtener_envios.asp', ['usuario' => self::$user, 'clave' => self::$pass])->getBody(
+        )->getContents();
     }
 
     /**
@@ -253,6 +265,7 @@ class SmsMasivos
     public function serverDate($iso = true)
     {
         $query = ($iso) ? ['iso' => 1] : [];
+
         return $this->get('/get_fecha.asp', $query)->getBody()->getContents();
     }
 

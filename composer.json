@@ -26,7 +26,10 @@
   "autoload":    {
     "psr-4": {
       "AlvaroCanepa\\SmsMasivos\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "prefer-stable": true
 }
