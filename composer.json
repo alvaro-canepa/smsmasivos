@@ -1,35 +1,34 @@
 {
-  "name":        "alvaro-canepa/smsmasivos",
-  "description": "Send SMS throw smsmasivos.com.uy service",
-  "type": "library",
-  "keywords":    [
-    "sms",
-    "smsmasivos",
-    "planetadeleste",
-    "message",
-    "notify"
-  ],
-  "homepage":    "https://github.com/alvaro-canepa/smsmasivos",
-  "license":     "MIT",
-  "authors":     [
-    {
-      "name":     "Alvaro Canepa",
-      "email":    "info@planetadeleste.com",
-      "homepage": "http://www.planetadeleste.com",
-      "role":     "Developer"
-    }
-  ],
-  "require":     {
-    "php":               ">=5.5.0",
-    "guzzlehttp/guzzle": "^6.0|^7.2"
-  },
-  "autoload":    {
-    "psr-4": {
-      "AlvaroCanepa\\SmsMasivos\\": "src/"
+    "name":"alvaro-canepa/smsmasivos",
+    "description":"Send SMS throw smsmasivos.com.uy service",
+    "type":"library",
+    "keywords":[
+        "sms",
+        "smsmasivos",
+        "planetadeleste",
+        "message",
+        "notify"
+    ],
+    "homepage":"https://github.com/alvaro-canepa/smsmasivos",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Alvaro Canepa",
+            "email":"info@planetadeleste.com",
+            "homepage":"http://www.planetadeleste.com",
+            "role":"Developer"
+        }
+    ],
+    "require":{
+        "php":">=5.5.0"
     },
-    "files": [
-      "src/helpers.php"
-    ]
-  },
-  "prefer-stable": true
+    "autoload":{
+        "psr-4":{
+            "AlvaroCanepa\\SmsMasivos\\":"src/"
+        },
+        "files":[
+            "src/helpers.php"
+        ]
+    },
+    "prefer-stable":true
 }
